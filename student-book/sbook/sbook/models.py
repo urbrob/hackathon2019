@@ -1,7 +1,6 @@
 import secrets
 from hashids import Hashids
 from django.db import IntegrityError, transaction, models
-from workate.utils import log, check_if_value_in_choices
 
 
 class StringIdModel(models.Model):
@@ -39,7 +38,6 @@ class StringIdModel(models.Model):
                         raise InvalidStrategyException()
                     super().save(*args, **kwargs)
             except IntegrityError as err:
-                log("Hash clash for StringIdModel", "info", extra_data=err)
                 self.id = None
                 self._create_retries -= 1
                 if self._create_retries == 0:
