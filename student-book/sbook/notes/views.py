@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from notes.models import Quiz, Group
+from django.db.models import Count
 from rest_framework.renderers import JSONRenderer
 from notes.serializers import QuizSerializer
 from rest_framework.response import Response
@@ -11,13 +12,22 @@ import datetime
 
 
 def quiz_start(request, group_pk, quiz_pk):
-    return render(request, 'quiz_start.html', {})
+    try:
+        group = Group.objects.get(id=group_pk)
+    except Group.DoesNotExist:
+        return Response({'error': 'Brak grupy'}, status=404)
+    try:
+        quiz = group.quiz_set.get(id=quiz_pk)
+    except Quiz.DoesNotExist:
+        return Http404('Quiz does not exist')
+    questions = quiz.questions.filter(answers__is_valid=True).annotate(answers_count=Count('answers'))
+    return render(request, 'quiz_start.html', {'questions': questions, 'quiz': quiz})
 
 def quiz_display(request, group_pk, quiz_pk):
     try:
-        group = Group.objects.filter(id=group_pk, users=request.user)[0]
-    except IndexError:
-        return Response({'error': 'Unauthorized access'}, status=404)
+        group = Group.objects.get(id=group_pk)
+    except Group.DoesNotExist:
+        return Response({'error': 'Brak grupy'}, status=404)
     try:
         quiz = group.quiz_set.get(id=quiz_pk)
     except Quiz.DoesNotExist:
@@ -32,9 +42,9 @@ def quizes_add_reverse_url(quizes, group_pk):
 
 def group_display(request, group_pk):
     try:
-        group = Group.objects.filter(id=group_pk, users=request.user)[0]
-    except IndexError:
-        return Response({'error': 'Unauthorized access'}, status=404)
+        group = Group.objects.get(id=group_pk)
+    except Group.DoesNotExist:
+        return Response({'error': 'Brak grupy'}, status=404)
     data = {
         'quizes': quizes_add_reverse_url(group.quiz_set.all(), group.pk),
         'events': [],
@@ -44,14 +54,18 @@ def group_display(request, group_pk):
 
 def quiz_menu_display(request, group_pk, quiz_pk):
     try:
-        group = Group.objects.filter(id=group_pk, users=request.user)[0]
-    except IndexError:
-        return Response({'error': 'Unauthorized access'}, status=404)
+        group = Group.objects.get(id=group_pk)
+    except Group.DoesNotExist:
+        return Response({'error': 'Brak grupy'}, status=404)
     try:
         quiz = group.quiz_set.get(id=quiz_pk)
     except Quiz.DoesNotExist:
         return Response({'error': 'Unauthorized access'}, status=404)
-    return render(request, 'base_menu_quiz.html', {"quiz": quiz, 'manage_url': reverse('quiz_display', args=[group_pk, quiz_pk])})
+    data = {
+        "quiz": quiz,
+        'start_url': reverse('quiz_start', args=[group_pk, quiz_pk]),
+        'manage_url': reverse('quiz_display', args=[group_pk, quiz_pk])}
+    return render(request, 'base_menu_quiz.html', data)
 
 
 class QuestionList(APIView):
