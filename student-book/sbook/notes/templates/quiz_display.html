@@ -1,5 +1,38 @@
-<html>
-    <body>
-        To jest moj zajebisty quiz {{ quiz.name }} - {{ quiz.pk }}
-    </body>
-</html>
+{% extends 'base.html' %}
+{% block head %}
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <title>Studentbook</title>
+  <style>
+    .trash { color:rgb(209, 91, 71); }
+    .flag { color:rgb(0, 0, 0 ); }
+    .panel-body { padding:0px; background-color: #343a40!important;}
+    .panel-primary {border-color: #343a40!important;}
+    .panel-primary>.panel-heading{ background-color: #343a40; border-color: #343a40;}
+    .panel .glyphicon,.list-group-item .glyphicon { margin-left: 20px; float: right;}
+    .glyphicon-pencil { color: #343a40;}
+    .jumbotron h1 {
+      margin-top: 45px;
+      margin-bottom: 20px;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+  <h1 class='text-center'>{{quiz.name}}</h1>
+  <div class="container background-white">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Lista pytań
+      </div>
+      <div class="panel-body">
+        {% for question in quiz.questions %}
+				<button type="button" onClick="location.href='{{group.reverse_url}}'" class="list-group-item list-group-item-action"></buton>
+          {{question.description}} <a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-pencil"></span></a> <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a></button>
+				{% endfor %}
+        <button type="button" onClick="location.href='{{group.reverse_url}}'" class="list-group-item list-group-item-action btn-primary">---------------------------------------------<span class="glyphicon glyphicon-plus"></span> </button>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
