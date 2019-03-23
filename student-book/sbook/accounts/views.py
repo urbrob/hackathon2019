@@ -20,7 +20,12 @@ from django.views.generic import View
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.translation import gettext_lazy as _
 from django.db import transaction
+from django.contrib.auth import logout as logout_django
 
+
+def logout(request):
+    logout_django(request)
+    return HttpResponseRedirect(reverse('home'))
 
 def groups_display(request):
     my_groups = Group.objects.filter(users=request.user).distinct()
