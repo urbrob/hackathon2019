@@ -31,6 +31,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("notes.urls")),
     path('login/', auth_view.LoginView.as_view(), {'authentication_form':LoginForms}),
-    path('', TemplateView.as_view(template_name='home.html')),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^user/register/$', account_views.UserRegister.as_view()),
 ]
