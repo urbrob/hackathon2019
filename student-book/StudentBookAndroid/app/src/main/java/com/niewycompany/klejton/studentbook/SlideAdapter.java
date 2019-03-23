@@ -15,18 +15,6 @@ public class SlideAdapter extends PagerAdapter {
     LayoutInflater inflater;
     String quizId;
 
-    /*Answer a1 = new Answer("1234", "42069","yass", true);
-    Answer a2 = new Answer("1235", "42069","nah", false);
-    Answer a3 = new Answer("1236", "42069","wat", false);
-    Answer a4 = new Answer("1237", "42069","que", false);
-    Answer[] answers1 = new Answer[]{a1,a2,a3,a4};
-
-    Answer a5 = new Answer("1238", "69420","yass", false);
-    Answer a6 = new Answer("1239", "69420","nah", true);
-    Answer a7 = new Answer("1240", "69420","wat", false);
-    Answer a8 = new Answer("1241", "69420","que", false);
-    Answer[] answers2 = new Answer[]{a5,a6,a7,a8};*/
-
     String quizJSON;
 
     public Quiz quiz;
@@ -43,7 +31,7 @@ public class SlideAdapter extends PagerAdapter {
     public int getCount() {
         try
         {
-            quizJSON = new REST_Integration().execute(quizId).get();
+            quizJSON = new REST_Integration().execute(quizId, "quiz").get();
             requestDone=true;
         }
         catch(Exception e)
