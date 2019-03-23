@@ -22,6 +22,12 @@ from django.utils.translation import gettext_lazy as _
 from django.db import transaction
 
 
+def groups_display(request):
+    my_groups = Group.objects.filter(users=request.user).distinct()
+    all_groups = Group.objects.filter(~Q(id__in=my_groups.values_list('id', flat=True)))
+    return render(request, 'accounts/groups.html', {'my_groups': my_groups, 'all_groups': all_groups})
+
+
 class UserRegister(CsrfExemptMixin, OAuthLibMixin, APIView):
     permission_classes = (permissions.AllowAny,)
 
