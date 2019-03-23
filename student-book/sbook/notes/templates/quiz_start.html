@@ -1,1 +1,61 @@
 {% extends 'base.html' %}
+
+{% block head %}
+	<title>Studentbook</title>
+{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+  <br>
+  <div class="col-12">
+    <div class="list-group-item text-white bg-dark">
+      <div class="row justify-content-md-center">
+        {{ quiz.name }}
+      </div>
+    </div>
+  </div>
+  {% for question in questions %}
+  <div class="container">
+    <br>
+    <div class="container">
+      <div class="card">
+        <div class="card-body bg-secondary">
+          <div id="{{ question.pk }}" class="row justify-content-md-center text-white">
+          {{ question.description }}
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        {% for answer in question.answers %}
+        <div class="col">
+          <div id="{{ answer.pk }}" class="card">
+            <div class="card-body">
+              <div class="row justify-content-md-center">
+                {{ answer.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript">
+          function getcube_{{ answer.pk }}(){
+            var number=document.getElementById("{{ question.pk }}").;
+            alert(number);
+          }
+        </script>
+        <input type="button" value="cube" onclick="getcube_{{ answer.pk }}()"/>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+
+
+
+
+{% endblock %}
