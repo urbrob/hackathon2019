@@ -16,11 +16,12 @@ public class REST_Integration extends AsyncTask<String, Void, String>
     @Override
     protected String doInBackground(String... params)
     {
-        String quizId = params[0];
+        String recordId = params[0];
+        String objectType = params[1];
         String result = null;
         try
         {
-            URL endpoint = new URL(this.endpoint + "quiz/" + quizId);
+            URL endpoint = new URL(this.endpoint + objectType + "/" + recordId);
             HttpURLConnection connection = (HttpURLConnection)endpoint.openConnection();
             connection.setRequestMethod("GET");
 

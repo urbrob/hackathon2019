@@ -31,6 +31,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"/>
+
         <Button
                 android:text="Answer A"
                 android:layout_width="180dp"
@@ -39,8 +40,10 @@
                 android:textSize="18sp"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/answerC"
-                android:layout_marginStart="16dp"/>
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/answerC"/>
+
         <Button
                 android:text="Answer B"
                 android:id="@+id/answerB"
@@ -50,8 +53,8 @@
                 android:layout_height="180dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/answerD" android:layout_marginBottom="8dp"
-        />
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/answerC"/>
 
         <TextView
                 android:padding="16dp"
