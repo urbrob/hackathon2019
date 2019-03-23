@@ -25,6 +25,10 @@ def quiz_display(request, group_pk, quiz_pk):
     quiz_serializer = QuizSerializer(quiz)
     return render(request, 'quiz_display.html', {'quiz': quiz_serializer.data})
 
+def quizes_add_reverse_url(quizes, group_pk):
+    for quiz in quizes:
+        quiz.reverse_url = reverse('quiz_menu_display', args=[group_pk, quiz.pk])
+        yield quiz
 
 def group_display(request, group_pk):
     try:
@@ -32,7 +36,7 @@ def group_display(request, group_pk):
     except IndexError:
         return Response({'error': 'Unauthorized access'}, status=404)
     data = {
-        'quizes': group.quiz_set.all(),
+        'quizes': quizes_add_reverse_url(group.quiz_set.all(), group.pk),
         'events': [],
         'notes': [],
     }

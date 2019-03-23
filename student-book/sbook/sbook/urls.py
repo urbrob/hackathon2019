@@ -31,9 +31,10 @@ from accounts import views as account_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("notes.urls")),
-    path('login/', auth_view.LoginView.as_view(), {'authentication_form':LoginForms}),
+    path('login/', auth_view.LoginView.as_view(), {'authentication_form':LoginForms}, name='login'),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url('app/', include(('accounts.urls', 'accounts'), namespace='accounts')),
-    path('register/', account_views.UserRegister.as_view()),
+    path('register/', account_views.UserRegister.as_view(), name='register'),
+    path('logout', account_views.logout, name='logout')
 ]
