@@ -1,26 +1,31 @@
 {% extends 'base.html' %}
 {% block head %}
-		<title>Studentbook</title>
+	<title>Studentbook</title>
 {% endblock %}
 {% block body %}
 <div class="container">
 	<br><br>
 		<div class="row">
 			<div class="col-6 col-md-4">
+					<div class="active-cyan-4 mb-4">
+							<input class="form-control" type="text" placeholder="Link do skopiowania" aria-label="Search">
+						</div>
 					<div class="list-group">
-						<br>tu musze wjebac pasek search<br><br>
-							<div class="list-group-item list-group-item-action active"> Twoje grupy </div>
+						<div class="list-group-item text-white bg-dark">Twoje grupy </div>
 							{% for group in my_groups %}
 								<button type="button" class="list-group-item list-group-item-action">{{group.name}}</button>	
 							{% endfor %}
 						  </div>
 			</div>
 			<div class="col-6 col-md-8">
-					<div class="list-group-item list-group-item-action active"> Wyszukane grupy </div>
+					<div class="list-group-item text-white bg-dark"> 
+						<input class="form-control" type="text" placeholder="Szukaj grup" aria-label="Search">
+					</div>
 					{% for group in all_groups %}
 						<button type="button" class="list-group-item list-group-item-action">{{group.name}}</button>	
 					{% endfor %}
 			</div>
 		</div>
+		<br>
 </div>
 {% endblock %}
