@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from sbook.models import StringIdModel
 from django.db import models
 from sbook.utils import current_user
+from django.urls import reverse
 
 
 class User(StringIdModel, AbstractUser):
@@ -13,6 +14,10 @@ class Group(StringIdModel):
     users = models.ManyToManyField(User, through='accounts.Membership')
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_groups", default=current_user)
+
+    @property
+    def reverse_url(self):
+        return reverse('group_display', args=[self.pk])
 
 class Membership(StringIdModel):
     OWNER = 'owner'

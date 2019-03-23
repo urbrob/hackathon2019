@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block head %}
+	<title>Studentbook</title>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<br><br>
+		<div class="row">
+			<div class="col-6 col-md-4">
+					<div class="list-group">
+						<div class="list-group-item text-white bg-dark">Twoje grupy </div>
+							{% for group in my_groups %}
+								<button type="button" onClick="location.href='{{group.reverse_url}}'" class="list-group-item list-group-item-action">{{group.name}}</button>	
+							{% endfor %}
+						  </div>
+			</div>
+			<div class="col-6 col-md-8">
+				<div class="list-group-item text-white bg-dark">Wszystkie grupy </div>
+				{% for group in all_groups %}
+					<button type="button" onClick="location.href='{{group.reverse_url}}'" class="list-group-item list-group-item-action">{{group.name}}</button>	
+				{% endfor %}
+			</div>
+		</div>
+		<br>
+</div>
+{% endblock %}
