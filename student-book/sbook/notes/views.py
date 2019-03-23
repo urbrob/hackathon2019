@@ -163,7 +163,7 @@ class QuizList(APIView):
         }
         return render(request, 'base_group.html', data)
 
-    def get(self, request):
+    def post(self, request):
         data = request.data.dict()
         group = Group.objects.get(id=data['group_pk'])
         quiz = Quiz.objects.create(created_by=request.user, name=data['name'])

@@ -31,8 +31,8 @@
       </div>
       <div class="panel-body">
         {% for question in quiz.questions %}
-				<button type="button" data-toggle="modal" data-target="#exampleModal" class="list-group-item list-group-item-action"></buton>
-          {{question.description}} <a href="#myModal"><span class="glyphicon glyphicon-pencil"></span></a> <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a></button>
+				<button type="button" data-toggle="modal" data-target="#exampleModal" class="list-group-item list-group-item-action"></button>
+          {{question.description}} <a href="#myModal"><span class="glyphicon glyphicon-pencil"></span></a> <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
 				{% endfor %}
         <button type="button" data-toggle="modal" data-target="#exampleModal" class="list-group-item list-group-item-action btn-primary">---------------------------------------------<span class="glyphicon glyphicon-plus"></span> </button>
       </div>
