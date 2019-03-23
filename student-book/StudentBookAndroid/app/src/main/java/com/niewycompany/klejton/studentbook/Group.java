@@ -2,8 +2,7 @@ package com.niewycompany.klejton.studentbook;
 
 public class Group
 {
-    String id;
+    String pk;
     String name;
-    String ownerId;
-    String[] moderatorIds;
+    Quiz[] quizzes;
 }
