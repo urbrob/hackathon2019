@@ -56,8 +56,26 @@ public class SlideAdapter extends PagerAdapter {
         }
 
         Gson gson = new Gson();
-        quiz = gson.fromJson(quizJSON,Quiz.class);
-        questionList = quiz.questions;
+        Quiz tempQuiz = gson.fromJson(quizJSON,Quiz.class);
+        quiz = new Quiz();
+        quiz.created_by = tempQuiz.created_by;
+        quiz.name = tempQuiz.name;
+        quiz.pk = tempQuiz.pk;
+        quiz.questions = new Question[tempQuiz.questions.length];
+        int i=0;
+        for(Question q : tempQuiz.questions)
+        {
+            if(q.answers.length >= 2 && q.answers.length <= 4 && !q.description.isEmpty())
+            {
+                quiz.questions[i]=q;
+                i++;
+            }
+        }
+        questionList = new Question[i];
+        for(int j=0; j<i; j++)
+        {
+            questionList[j] = quiz.questions[j];
+        }
         return questionList.length;
     }
 
@@ -78,21 +96,24 @@ public class SlideAdapter extends PagerAdapter {
         Button answerC = (Button) view.findViewById(R.id.answerC);
         Button answerD = (Button) view.findViewById(R.id.answerD);
         question.setText(questionList[position].description);
-        if(questionList[position].answers.length >= 1)
-        {
-            answerA.setText(questionList[position].answers[0].description);
-        }
-        if(questionList[position].answers.length >= 2)
-        {
-            answerB.setText(questionList[position].answers[1].description);
-        }
+        answerA.setText(questionList[position].answers[0].description);
+        answerB.setText(questionList[position].answers[1].description);
         if(questionList[position].answers.length >= 3)
         {
             answerC.setText(questionList[position].answers[2].description);
         }
+        else
+        {
+            answerC.setVisibility(View.GONE);
+        }
         if(questionList[position].answers.length == 4)
         {
             answerD.setText(questionList[position].answers[3].description);
+        }
+        else
+        {
+            answerD.setVisibility(View.GONE);
+            answerC.setX(0);
         }
 
         container.addView(view);
