@@ -28,41 +28,44 @@ public class SlideAdapter extends PagerAdapter {
     public Boolean requestDone = false;
 
     @Override
-    public int getCount() {
-        try
+    public int getCount()
+    {
+        if (!requestDone)
         {
-            quizJSON = new REST_Integration().execute(quizId, "quiz").get();
-            requestDone=true;
-        }
-        catch(Exception e)
-        {
-            //hecc
-        }
-        while(requestDone==false)
-        {
-            //don't
-        }
-
-        Gson gson = new Gson();
-        Quiz tempQuiz = gson.fromJson(quizJSON,Quiz.class);
-        quiz = new Quiz();
-        quiz.created_by = tempQuiz.created_by;
-        quiz.name = tempQuiz.name;
-        quiz.pk = tempQuiz.pk;
-        quiz.questions = new Question[tempQuiz.questions.length];
-        int i=0;
-        for(Question q : tempQuiz.questions)
-        {
-            if(q.answers.length >= 2 && q.answers.length <= 4 && !q.description.isEmpty())
+            try
             {
-                quiz.questions[i]=q;
-                i++;
+                quizJSON = new REST_Integration().execute(quizId, "quiz").get();
+                requestDone = true;
+            } catch (Exception e)
+            {
+                //hecc
             }
-        }
-        questionList = new Question[i];
-        for(int j=0; j<i; j++)
-        {
-            questionList[j] = quiz.questions[j];
+            while (requestDone == false)
+            {
+                //don't
+            }
+
+            Gson gson = new Gson();
+            Quiz tempQuiz = gson.fromJson(quizJSON, Quiz.class);
+            quiz = new Quiz();
+            quiz.created_by = tempQuiz.created_by;
+            quiz.name = tempQuiz.name;
+            quiz.pk = tempQuiz.pk;
+            quiz.questions = new Question[tempQuiz.questions.length];
+            int i = 0;
+            for (Question q : tempQuiz.questions)
+            {
+                if (q.answers.length >= 2 && q.answers.length <= 4 && !q.description.isEmpty())
+                {
+                    quiz.questions[i] = q;
+                    i++;
+                }
+            }
+            questionList = new Question[i];
+            for (int j = 0; j < i; j++)
+            {
+                questionList[j] = quiz.questions[j];
+            }
         }
         return questionList.length;
     }
@@ -101,6 +104,8 @@ public class SlideAdapter extends PagerAdapter {
         else
         {
             answerD.setVisibility(View.GONE);
+            answerC.setX(270);
+            answerC.setY(0);
         }
 
         container.addView(view);
