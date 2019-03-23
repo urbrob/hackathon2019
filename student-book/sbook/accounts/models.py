@@ -9,6 +9,12 @@ class User(StringIdModel, AbstractUser):
 
 
 class Group(StringIdModel):
+    name = models.CharField(max_length=250)
+    users = models.ManyToManyField(User, through='accounts.Membership')
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_groups", default=current_user)
+
+class Membership(StringIdModel):
     OWNER = 'owner'
     MODERATOR = 'moderator'
     USER = 'user'
@@ -18,13 +24,7 @@ class Group(StringIdModel):
         (USER, 'User'),
     )
 
-    name = models.CharField(max_length=250)
-    users = models.ManyToManyField(User, through='accounts.Membership')
     status = models.CharField(choices=STATUSES, max_length=50)
-    created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT, related_name="created_groups", default=current_user)
-
-class Membership(StringIdModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='group_memberships')
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='memberships')
     created_at = models.DateTimeField(auto_now_add=True)
