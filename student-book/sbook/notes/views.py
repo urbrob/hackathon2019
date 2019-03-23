@@ -19,7 +19,6 @@ def quiz_display(request, quiz_pk):
     return HttpResponse(html)
 
 
-
 class QuestionList(APIView):
     renderer_classes = (JSONRenderer, )
 
