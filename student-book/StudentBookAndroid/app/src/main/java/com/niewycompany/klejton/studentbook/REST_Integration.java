@@ -20,7 +20,7 @@ public class REST_Integration extends AsyncTask<String, Void, String>
         String result = null;
         try
         {
-            URL endpoint = new URL(this.endpoint + "question/" + quizId);
+            URL endpoint = new URL(this.endpoint + "quiz/" + quizId);
             HttpURLConnection connection = (HttpURLConnection)endpoint.openConnection();
             connection.setRequestMethod("GET");
 
