@@ -20,8 +20,8 @@ def quiz_display(request, quiz_pk):
 
 def group_display(request, group_pk):
     try:
-        group = Group.objects.get(id=quiz_pk, users=request.user)
-    except Quiz.DoesNotExist:
+        group = Group.objects.filter(id=group_pk, users=request.user)[0]
+    except IndexError:
         return Response({'error': 'Unauthorized access'}, status=404)
     data = {
         'quizes': group.quiz_set.all(),
