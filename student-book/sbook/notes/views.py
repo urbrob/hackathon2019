@@ -3,13 +3,12 @@ from rest_framework.views import APIView
 from notes.models import Quiz, Group
 from django.db.models import Count
 from rest_framework.renderers import JSONRenderer
-from notes.serializers import QuizSerializer
+from notes.serializers import QuizSerializer, QuestionSerializer
 from rest_framework.response import Response
 from django.template.loader import get_template
 from django.http import Http404
 from django.urls import reverse
 import datetime
-
 
 def quiz_start(request, group_pk, quiz_pk):
     try:
@@ -20,8 +19,9 @@ def quiz_start(request, group_pk, quiz_pk):
         quiz = group.quiz_set.get(id=quiz_pk)
     except Quiz.DoesNotExist:
         return Http404('Quiz does not exist')
-    questions = quiz.questions.filter(answers__is_valid=True).annotate(answers_count=Count('answers'))
-    return render(request, 'quiz_start.html', {'questions': questions, 'quiz': quiz})
+    questions_serializers = QuestionSerializer(quiz.questions.all(), many=True)
+    #import pdb; pdb.set_trace()
+    return render(request, 'quiz_start.html', {'questions': questions_serializers.data, 'quiz': quiz})
 
 def quiz_display(request, group_pk, quiz_pk):
     try:
