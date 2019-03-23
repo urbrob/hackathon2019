@@ -18,7 +18,7 @@ public class GroupDisplayActivity extends ListActivity
     String groupsJSON;
     String userId;
     Boolean requestDone = false;
-    Map<String,String> quizNameToQuizId = new HashMap<String,String>();
+    Map<Long,String> groupIdToViewId = new HashMap<Long,String>();
     ArrayList<String> listItems = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     @Override
@@ -37,23 +37,21 @@ public class GroupDisplayActivity extends ListActivity
         {
             //hecc
         }
-        while(requestDone==false)
+        while(!requestDone)
         {
             //don't
         }
 
         Gson gson = new Gson();
         Group[] groups = gson.fromJson(groupsJSON,Group[].class);
+        Long i=0L;
         for(Group g : groups)
         {
-            quizNameToQuizId.put(g.pk,g.name);
+            groupIdToViewId.put(i,g.pk);
             listItems.add(g.name);
+            i++;
         }
-        listItems.add("hECC");
         setContentView(R.layout.activity_group_display);
-        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        myToolbar.setTitle("Grupy");
-        setSupportActionBar(myToolbar);*/
         adapter=new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 listItems);
@@ -66,5 +64,11 @@ public class GroupDisplayActivity extends ListActivity
         super.onListItemClick(l, v, pos, id);
 
         Toast.makeText(getBaseContext(),String.valueOf(id) + " fUCKS gIVEN",Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, QuizListActivity.class);
+        String groupId = groupIdToViewId.get(id);
+        intent.putExtra("GROUP_ID", groupId);
+        intent.putExtra("USER_ID", this.userId);
+        startActivity(intent);
     }
 }

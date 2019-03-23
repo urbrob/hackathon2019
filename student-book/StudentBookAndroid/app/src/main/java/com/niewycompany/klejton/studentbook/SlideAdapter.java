@@ -104,7 +104,7 @@ public class SlideAdapter extends PagerAdapter {
         else
         {
             answerD.setVisibility(View.GONE);
-            answerC.setX(270);
+            answerC.setX(256);
             answerC.setY(0);
         }
 
