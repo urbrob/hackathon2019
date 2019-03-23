@@ -18,9 +18,10 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_view
 from django.contrib.auth.views import LoginView
 from django.views.generic import TemplateView
-
 from notes import views
 from forms import LoginForms
+from django.conf.urls import url
+
 
 from django.conf.urls import url
 from oauth2_provider import views as oauth2_views
@@ -32,5 +33,6 @@ urlpatterns = [
     path("api/", include("notes.urls")),
     path('login/', auth_view.LoginView.as_view(), {'authentication_form':LoginForms}),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^user/register/$', account_views.UserRegister.as_view()),
 ]
