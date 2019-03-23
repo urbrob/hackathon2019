@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from notes.models import Quiz
+from notes.models import Quiz, Group
 from rest_framework.renderers import JSONRenderer
 from notes.serializers import QuizSerializer
 from rest_framework.response import Response
@@ -17,6 +17,18 @@ def quiz_display(request, quiz_pk):
     quiz_serializer = QuizSerializer(quiz)
     return render(request, 'quiz_display.html', {'quiz': quiz_serializer.data})
 
+
+def group_display(request, group_pk):
+    try:
+        group = Group.objects.filter(id=group_pk, users=request.user)[0]
+    except IndexError:
+        return Response({'error': 'Unauthorized access'}, status=404)
+    data = {
+        'quizes': group.quiz_set.all(),
+        'events': [],
+        'notes': [],
+    }
+    return render(request, 'base_group.html', data)
 
 
 class QuestionList(APIView):
