@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/full-width-pics.css" rel="stylesheet">
+    <script src="jquery-3.3.1.min.js"></script>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -46,7 +47,7 @@
   <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
           <div class="container">
-            <a class="navbar-brand" href="#">StudentBook</a>
+            <a class="navbar-brand" href="{% url 'home' %}">StudentBook</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -54,7 +55,7 @@
               {% if user.is_authenticated %}
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Profil</a>
+                  <a class="nav-link" href="{% url 'groups' %}">Grupy</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Wyloguj</a>

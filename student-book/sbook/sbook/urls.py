@@ -35,5 +35,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'^oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url('app/', include(('accounts.urls', 'accounts'), namespace='accounts')),
-    url(r'^user/register/$', account_views.UserRegister.as_view()),
+    path('register/', account_views.UserRegister.as_view()),
 ]

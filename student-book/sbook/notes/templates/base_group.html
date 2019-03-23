@@ -1,26 +1,78 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	<title>{{ group.name }}</title>
+{% endblock %}
+
+{% block body %}
+<br><br>
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-auto">
-        <h2>
-          NAZWA GRUPY
-        </h2>
+    <div class="row justify-content-md-center">
+          <h2>
+            {{ group.name }}
+          </h2>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <button class="btn btn-secondary" type="button" onclick="show('id1');">Quizes</button>
+      <button class="btn btn-secondary" type="button" onclick="show('id2');">Events</button>
+      <button class="btn btn-secondary" type="button" onclick="show('id3');">Notes</button>
     </div>
   </div>
 </div>
 
 
 
+
 <div class="container">
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link {% if request.path == 'quizy' %} active {% endif %}" href="#">Quizy</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link {% if request.path == 'wydarzenia' %} active {% endif %}" href="#">Wydarzenia</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link {% if request.path == 'notatki' %} active {% endif %}" href="#">Notatki</a>
-    </li>
-  </ul>
+  <br>
+  <div id="id1"  style="display:none">
+    <div class="col-12">
+      <div class="list-group-item text-white bg-dark">
+        <div class="row justify-content-md-center">
+          Wszystkie Quizy
+        </div>
+      </div>
+      {% for quize in quizes %}
+        <button type="button" onClick="location.href='{{quize.reverse_url}}'" class="list-group-item list-group-item-action">{{quize.name}}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div id="id2"  style="display:none">
+    <div class="col-12">
+      <div class="list-group-item text-white bg-dark">
+        <div class="row justify-content-md-center">
+          Wszystkie Wydarzenia
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="id3"  style="display:none">
+    <div class="col-12">
+      <div class="list-group-item text-white bg-dark">
+        <div class="row justify-content-md-center">
+          Wszystkie Notatki
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+<script type="text/javascript">
+function show(elementId) {
+ document.getElementById("id1").style.display="none";
+ document.getElementById("id2").style.display="none";
+ document.getElementById("id3").style.display="none";
+ document.getElementById(elementId).style.display="block";
+}
+</script>
+
+
+{% endblock %}
