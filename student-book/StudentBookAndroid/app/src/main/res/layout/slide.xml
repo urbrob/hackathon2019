@@ -1,36 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
-        android:id="@+id/slidelinearlayout">
+        android:id="@+id/slidelinearlayout" android:orientation="vertical">
 
-    <TextView
-            android:padding="16dp"
-            android:id="@+id/question"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:text="Question Here"
-            android:textColor="#000000"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    <Button
-            android:text="Answer A"
+    <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/answerA"/>
-    <Button
-            android:text="Answer B"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/answerB"/>
-    <Button
-            android:text="Answer C"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/answerC"/>
-    <Button
-            android:text="Answer D"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/answerD"/>
+            android:layout_height="match_parent">
+
+        <Button
+                android:text="Answer B"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/answerB"
+                android:background="@drawable/button_background"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/answerC" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:textSize="18sp"/>
+        <Button
+                android:text="Answer A"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/answerA"
+                android:background="@drawable/button_background"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/answerB" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:textSize="18sp"/>
+        <Button
+                android:text="Answer C"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/answerC"
+                android:background="@drawable/button_background"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/answerD" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:textSize="18sp"/>
+        <Button
+                android:text="Answer D"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/answerD"
+                android:background="@drawable/button_background" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="128dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:textSize="18sp"/>
+        <TextView
+                android:padding="16dp"
+                android:id="@+id/question"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:text="Question Here"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="93dp" app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"/>
+    </android.support.constraint.ConstraintLayout>
 
 
 </LinearLayout>
