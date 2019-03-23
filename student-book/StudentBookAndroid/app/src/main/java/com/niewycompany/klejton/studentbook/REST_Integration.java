@@ -2,61 +2,62 @@ package com.niewycompany.klejton.studentbook;
 
 import android.os.AsyncTask;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class REST_Integration
+public class REST_Integration extends AsyncTask<String, Void, String>
 {
-    public static Question[] getQuestions()
+    String endpoint = "http://77618c1e.ngrok.io/api/";
+    String result;
+
+    @Override
+    protected String doInBackground(String... params)
     {
-        AsyncTask.execute(new Runnable()
+        String quizId = params[0];
+        String result = null;
+        try
         {
-            @Override
-            public void run()
+            URL endpoint = new URL(this.endpoint + "question/" + quizId);
+            HttpURLConnection connection = (HttpURLConnection)endpoint.openConnection();
+            connection.setRequestMethod("GET");
+
+            connection.connect();
+
+            if(connection.getResponseCode() == 200)
             {
-                URL restEndpoint = null;
-                try
-                {
-                    restEndpoint = new URL("FUCCMEJERRY");
+                InputStream stream = connection.getInputStream();
+                InputStreamReader streamReader = new InputStreamReader(stream);
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+                String inputLine;
+                //Check if the line we are reading is not null
+                while((inputLine = reader.readLine()) != null){
+                    stringBuilder.append(inputLine);
                 }
-                catch(MalformedURLException e)
-                {
-                    //it's fucced
-                }
-
-                HttpsURLConnection myConnection = null;
-                try
-                {
-                    myConnection = (HttpsURLConnection) restEndpoint.openConnection();
-                }
-                catch(IOException e)
-                {
-                    //it's fucced
-                }
-
-                Integer responseCode = 0;
-                try
-                {
-                    responseCode = myConnection.getResponseCode();
-                }
-                catch(IOException e)
-                {
-                    //it's fucced
-                }
-
-                if (responseCode == 200)
-                {
-                    // Success
-                    // Further processing here
-                }
-                else
-                {
-                    // Error handling code goes here
-                }
+                //Close our InputStream and Buffered reader
+                reader.close();
+                streamReader.close();
+                //Set our result equal to our stringBuilder
+                result = stringBuilder.toString();
             }
-        });
-        return null;
+            else
+            {
+                //fecc
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        this.result = result;
+        return result;
+    }
+
+    protected void onPostExecute(String result)
+    {
+        super.onPostExecute(result);
     }
 }
