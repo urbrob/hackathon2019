@@ -8,7 +8,6 @@ class AnswerSerializer(serializers.ModelSerializer):
         fields = ('pk', 'description', 'is_valid', 'created_at')
 
 
-
 class QuestionSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True)
     class Meta:

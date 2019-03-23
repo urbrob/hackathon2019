@@ -1,0 +1,26 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-auto">
+        <h2>
+          NAZWA GRUPY
+        </h2>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link {% if request.path == 'quizy' %} active {% endif %}" href="#">Quizy</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if request.path == 'wydarzenia' %} active {% endif %}" href="#">Wydarzenia</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if request.path == 'notatki' %} active {% endif %}" href="#">Notatki</a>
+    </li>
+  </ul>
+</div>
