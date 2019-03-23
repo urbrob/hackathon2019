@@ -32,6 +32,7 @@
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.niewycompany.klejton.studentbook.Studentbook"/>
+        </activity>
         <activity android:name=".LoginActivity">
         </activity>
         <activity android:name=".RegisterActivity">
