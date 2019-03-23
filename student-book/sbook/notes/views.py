@@ -10,6 +10,9 @@ from django.urls import reverse
 import datetime
 
 
+def quiz_start(request, group_pk, quiz_pk):
+    return render(request, 'quiz_start.html', {})
+
 def quiz_display(request, group_pk, quiz_pk):
     try:
         group = Group.objects.filter(id=group_pk, users=request.user)[0]
