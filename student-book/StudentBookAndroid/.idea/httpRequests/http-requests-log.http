@@ -1,0 +1,40 @@
+GET http://77618c1e.ngrok.io/api/question/BBBo8j9X
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-03-23T022730.200.json
+
+###
+
+GET http://77618c1e.ngrok.io/api
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-03-23T022714.404.html
+
+###
+
+GET http://77618c1e.ngrok.io/question/BBBo8j9X
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-03-23T022647.404.html
+
+###
+
+GET http://77618c1e.ngrok.io/question/
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-03-23T022612.404.html
+
+###
+
+GET http://77618c1e.ngrok.io/
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-03-23T082416.400.html
+
+###
+
