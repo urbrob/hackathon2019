@@ -16,8 +16,12 @@
       margin-top: 45px;
       margin-bottom: 20px;
     }
+    .modal-dialog {
+
+    }
   </style>
 {% endblock %}
+
 {% block body %}
   <h1 class='text-center'>{{quiz.name}}</h1>
   <div class="container background-white">
@@ -27,10 +31,10 @@
       </div>
       <div class="panel-body">
         {% for question in quiz.questions %}
-				<button type="button" onClick="location.href='{{group.reverse_url}}'" class="list-group-item list-group-item-action"></buton>
-          {{question.description}} <a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-pencil"></span></a> <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a></button>
+				<button type="button" data-toggle="modal" data-target="#exampleModal" class="list-group-item list-group-item-action"></buton>
+          {{question.description}} <a href="#myModal"><span class="glyphicon glyphicon-pencil"></span></a> <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a></button>
 				{% endfor %}
-        <button type="button" onClick="location.href='{{group.reverse_url}}'" class="list-group-item list-group-item-action btn-primary">---------------------------------------------<span class="glyphicon glyphicon-plus"></span> </button>
+        <button type="button" data-toggle="modal" data-target="#exampleModal" class="list-group-item list-group-item-action btn-primary">---------------------------------------------<span class="glyphicon glyphicon-plus"></span> </button>
       </div>
     </div>
   </div>
