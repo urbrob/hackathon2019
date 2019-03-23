@@ -78,9 +78,15 @@ public class SlideAdapter extends PagerAdapter {
         Button answerC = (Button) view.findViewById(R.id.answerC);
         Button answerD = (Button) view.findViewById(R.id.answerD);
         question.setText(questionList[position].description);
-        answerA.setText(questionList[position].answers[0].description);
-        answerB.setText(questionList[position].answers[1].description);
-        if(questionList[position].answers.length == 3)
+        if(questionList[position].answers.length >= 1)
+        {
+            answerA.setText(questionList[position].answers[0].description);
+        }
+        if(questionList[position].answers.length >= 2)
+        {
+            answerB.setText(questionList[position].answers[1].description);
+        }
+        if(questionList[position].answers.length >= 3)
         {
             answerC.setText(questionList[position].answers[2].description);
         }
