@@ -6,36 +6,36 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SlideAdapter extends PagerAdapter {
     Context context;
     LayoutInflater inflater;
 
-    // list of titles
-    public String[] lst_title = {
-            "COSMONAUT",
-            "SATELITE",
-            "GALAXY",
-            "ROCKET"
-    }   ;
-    // list of descriptions
-    public String[] lst_description = {
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
-    };
-    // list of background colors
-    public int[]  lst_backgroundcolor = {
-            Color.rgb(55,55,55),
-            Color.rgb(239,85,85),
-            Color.rgb(110,49,89),
-            Color.rgb(1,188,212)
-    };
+    Answer a1 = new Answer("1234", "42069","yass", true);
+    Answer a2 = new Answer("1235", "42069","nah", false);
+    Answer a3 = new Answer("1236", "42069","wat", false);
+    Answer a4 = new Answer("1237", "42069","que", false);
+    Answer[] answers1 = new Answer[]{a1,a2,a3,a4};
 
+    Answer a5 = new Answer("1238", "69420","yass", false);
+    Answer a6 = new Answer("1239", "69420","nah", true);
+    Answer a7 = new Answer("1240", "69420","wat", false);
+    Answer a8 = new Answer("1241", "69420","que", false);
+    Answer[] answers2 = new Answer[]{a5,a6,a7,a8};
+
+    // list of questions
+    public Question[] questionList = {
+            new Question("42069","Is this loss?", answers1),
+            new Question("69420", "Is this win?", answers2)
+    };
 
     public SlideAdapter(Context context) {
         this.context = context;
@@ -43,7 +43,7 @@ public class SlideAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return lst_title.length;
+        return questionList.length;
     }
 
     @Override
@@ -56,11 +56,17 @@ public class SlideAdapter extends PagerAdapter {
         inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.slide,container,false);
         LinearLayout layoutslide = (LinearLayout) view.findViewById(R.id.slidelinearlayout);
-        TextView txttitle= (TextView) view.findViewById(R.id.txttitle);
-        TextView description = (TextView) view.findViewById(R.id.txtdescription);
-        layoutslide.setBackgroundColor(lst_backgroundcolor[position]);
-        txttitle.setText(lst_title[position]);
-        description.setText(lst_description[position]);
+        TextView question= (TextView) view.findViewById(R.id.question);
+        Button answerA = (Button) view.findViewById(R.id.answerA);
+        Button answerB = (Button) view.findViewById(R.id.answerB);
+        Button answerC = (Button) view.findViewById(R.id.answerC);
+        Button answerD = (Button) view.findViewById(R.id.answerD);
+        question.setText(questionList[position].question);
+        answerA.setText(questionList[position].answers[0].answer);
+        answerB.setText(questionList[position].answers[1].answer);
+        answerC.setText(questionList[position].answers[2].answer);
+        answerD.setText(questionList[position].answers[3].answer);
+
         container.addView(view);
         return view;
     }
