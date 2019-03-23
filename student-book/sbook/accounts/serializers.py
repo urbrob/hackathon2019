@@ -1,10 +1,14 @@
 from rest_framework import serializers
 from accounts import models
-from django.utils.translation import gettext_lazy as _
+
+
+class GroupSerializerREST(serializers.ModelSerializer):
+    class Meta:
+        model = models.Group
+        fields = ('pk', 'name')
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-
     def validate(self, data):
         try:
             user = models.User.objects.filter(username=data.get('username'))

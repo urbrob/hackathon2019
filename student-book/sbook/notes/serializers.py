@@ -15,8 +15,14 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ('pk', 'description', 'created_at', 'created_by', 'answers')
 
 
-class QuizSerializer(serializers.ModelSerializer):
+class QuizSerializerREST(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True)
     class Meta:
         model = Quiz
         fields = ('pk', 'name', 'created_at', 'created_by', 'questions')
+
+
+class QuizSerializerListREST(serializers.ModelSerializer):
+    class Meta:
+        model = Quiz
+        fields = ('pk', 'name')
