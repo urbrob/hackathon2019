@@ -11,7 +11,7 @@ class QuizAdmin(admin.ModelAdmin):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display_links = ['pk']
-    list_display = ('pk','description', 'quiz', 'created_at', 'created_by')
+    list_display = ('pk','description', 'created_at', 'created_by')
 
 @admin.register(Answer)
 class Answer(admin.ModelAdmin):

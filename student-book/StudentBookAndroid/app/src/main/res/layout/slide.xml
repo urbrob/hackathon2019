@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/slidelinearlayout" android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <Button
+                android:text="Answer B"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/answerB"
+                app:layout_constraintBottom_toTopOf="@+id/answerC"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"/>
+        <Button
+                android:text="Answer A"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/answerA"
+                app:layout_constraintBottom_toTopOf="@+id/answerB"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"/>
+        <Button
+                android:text="Answer C"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/answerC"
+                app:layout_constraintBottom_toTopOf="@+id/answerD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"/>
+        <Button
+                android:text="Answer D"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/answerD"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"/>
+        <TextView
+                android:padding="16dp"
+                android:id="@+id/question"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:text="Question Here"
+                android:textColor="#000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="68dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>

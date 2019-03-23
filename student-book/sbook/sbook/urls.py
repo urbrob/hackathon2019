@@ -15,10 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth import views
+from django.contrib.auth import views as auth_view
+from django.contrib.auth.views import LoginView
+from django.views.generic import TemplateView
+from notes import views
+from forms import LoginForms
+from django.conf.urls import url
+
+
+from django.conf.urls import url
+from oauth2_provider import views as oauth2_views
+
+from accounts import views as account_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path("api/", include("notes.urls")),
-    path('login/', views.login)
+    path("api/", include("notes.urls")),
+    path('login/', auth_view.LoginView.as_view(), {'authentication_form':LoginForms}),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url('app/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    url(r'^user/register/$', account_views.UserRegister.as_view()),
 ]
