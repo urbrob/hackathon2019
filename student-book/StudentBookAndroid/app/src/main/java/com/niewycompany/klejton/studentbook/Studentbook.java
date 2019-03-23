@@ -30,4 +30,12 @@ public class Studentbook extends AppCompatActivity
         intent.putExtra("GROUP_ID", groupId);
         startActivity(intent);
     }
+
+    public void openGroupList(View view)
+    {
+        Intent intent = new Intent(this, GroupDisplayActivity.class);
+        String userId = "XOLPGno";
+        intent.putExtra("USER_ID", userId);
+        startActivity(intent);
+    }
 }

@@ -27,6 +27,8 @@ public class REST_Integration extends AsyncTask<String, Void, String>
 
             connection.connect();
 
+            Integer responseCode = connection.getResponseCode();
+
             if(connection.getResponseCode() == 200)
             {
                 InputStream stream = connection.getInputStream();
