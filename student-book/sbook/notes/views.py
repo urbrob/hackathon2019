@@ -5,7 +5,7 @@ from rest_framework.renderers import JSONRenderer
 from notes.serializers import QuizSerializer
 from rest_framework.response import Response
 from django.template.loader import get_template
-from django.http import HttpResponse
+from django.http import Http404
 import datetime
 
 
@@ -13,10 +13,10 @@ def quiz_display(request, quiz_pk):
     try:
         quiz = Quiz.objects.get(id=quiz_pk)
     except Quiz.DoesNotExist:
-        return Response({})
+        return Http404('Quiz does not exist')
     quiz_serializer = QuizSerializer(quiz)
-    html = get_template('quiz_display.html').render({'quiz': quiz_serializer.data})
-    return HttpResponse(html)
+    return render(request, 'quiz_display.html', {'quiz': quiz_serializer.data})
+
 
 
 class QuestionList(APIView):

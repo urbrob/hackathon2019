@@ -29,4 +29,5 @@ urlpatterns = [
     path('login/', auth_view.LoginView.as_view(), {'authentication_form':LoginForms}),
     path('', TemplateView.as_view(template_name='home.html')),
     url(r'^oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url('app/', include(('accounts.urls', 'accounts'), namespace='accounts')),
 ]
