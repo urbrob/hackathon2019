@@ -18,9 +18,11 @@ from django.urls import path, include
 from django.contrib.auth import views
 from django.views.generic import TemplateView
 
+from forms import LoginForms
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path("api/", include("notes.urls")),
-    #path('login/', views.login),
+    path('login/', views.login,{'authentication_form':LoginForms}),
     path('', TemplateView.as_view(template_name='home.html'))
 ]
