@@ -1,11 +1,12 @@
 from django.db import models
 from sbook.models import StringIdModel
-from accounts.models import User
+from accounts.models import User, Group
 from sbook.utils import current_user
 
 
 class Quiz(StringIdModel):
     name = models.CharField(max_length=250)
+    groups = models.ManyToManyField(Group)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="quizes",  default=current_user)
 

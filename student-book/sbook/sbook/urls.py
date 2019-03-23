@@ -18,12 +18,20 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_view
 from django.contrib.auth.views import LoginView
 from django.views.generic import TemplateView
+<<<<<<< HEAD
+=======
+from notes import views
+>>>>>>> 2d7a756fd1ca95f5729b45703006fbd34b90c918
 
 from forms import LoginForms
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     #path("api/", include("notes.urls")),
+=======
+    path("api/", include("notes.urls")),
+>>>>>>> 2d7a756fd1ca95f5729b45703006fbd34b90c918
     path('login/', auth_view.LoginView.as_view(), {'authentication_form':LoginForms}),
     path('', TemplateView.as_view(template_name='home.html'))
 ]
