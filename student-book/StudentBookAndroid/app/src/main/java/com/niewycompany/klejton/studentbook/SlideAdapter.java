@@ -88,10 +88,34 @@ public class SlideAdapter extends PagerAdapter {
         Button answerD = (Button) view.findViewById(R.id.answerD);
         question.setText(questionList[position].description);
         answerA.setText(questionList[position].answers[0].description);
+        if(questionList[position].answers[0].is_valid)
+        {
+            answerA.setTag("true");
+        }
+        else
+        {
+            answerA.setTag("false");
+        }
         answerB.setText(questionList[position].answers[1].description);
+        if(questionList[position].answers[1].is_valid)
+        {
+            answerB.setTag("true");
+        }
+        else
+        {
+            answerB.setTag("false");
+        }
         if(questionList[position].answers.length >= 3)
         {
             answerC.setText(questionList[position].answers[2].description);
+            if(questionList[position].answers[2].is_valid)
+            {
+                answerC.setTag("true");
+            }
+            else
+            {
+                answerC.setTag("false");
+            }
         }
         else
         {
@@ -100,6 +124,14 @@ public class SlideAdapter extends PagerAdapter {
         if(questionList[position].answers.length == 4)
         {
             answerD.setText(questionList[position].answers[3].description);
+            if(questionList[position].answers[3].is_valid)
+            {
+                answerD.setTag("true");
+            }
+            else
+            {
+                answerD.setTag("false");
+            }
         }
         else
         {

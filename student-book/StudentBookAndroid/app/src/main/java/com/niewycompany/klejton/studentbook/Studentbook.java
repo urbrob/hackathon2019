@@ -15,22 +15,6 @@ public class Studentbook extends AppCompatActivity
         setContentView(R.layout.activity_studentbook);
     }
 
-    public void openQuiz(View view)
-    {
-        Intent intent = new Intent(this, QuizActivity.class);
-        String quizId = "BBBo8j9X";
-        intent.putExtra("QUIZ_ID", quizId);
-        startActivity(intent);
-    }
-
-    public void openFeed(View view)
-    {
-        Intent intent = new Intent(this, FeedActivity.class);
-        String groupId = "hecc";
-        intent.putExtra("GROUP_ID", groupId);
-        startActivity(intent);
-    }
-
     public void openGroupList(View view)
     {
         Intent intent = new Intent(this, GroupDisplayActivity.class);

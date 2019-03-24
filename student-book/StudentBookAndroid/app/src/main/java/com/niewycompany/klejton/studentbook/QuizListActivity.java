@@ -65,7 +65,7 @@ public class QuizListActivity extends ListActivity
     {
         super.onListItemClick(l, v, pos, id);
 
-        Toast.makeText(getBaseContext(),String.valueOf(id) + " fUCKS gIVEN",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(),id + " fUCKS gIVEN",Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, QuizActivity.class);
         String quizId = quizIdToViewId.get(id);

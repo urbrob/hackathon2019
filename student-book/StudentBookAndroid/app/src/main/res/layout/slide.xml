@@ -20,7 +20,7 @@
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
-        />
+                android:onClick="buttonPressed"/>
         <Button
                 android:text="Answer C"
                 android:id="@+id/answerC"
@@ -30,7 +30,8 @@
                 android:layout_height="180dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="16dp"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"/>
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:onClick="buttonPressed"/>
 
         <Button
                 android:text="Answer A"
@@ -42,7 +43,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/answerC"/>
+                app:layout_constraintBottom_toTopOf="@+id/answerC" android:onClick="buttonPressed"/>
 
         <Button
                 android:text="Answer B"
@@ -54,7 +55,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/answerC"/>
+                app:layout_constraintBottom_toTopOf="@+id/answerC" android:onClick="buttonPressed"/>
 
         <TextView
                 android:padding="16dp"
