@@ -26,7 +26,7 @@ def quiz_start(request, group_pk, quiz_pk):
     except Quiz.DoesNotExist:
         return Http404('Quiz does not exist')
     questions_serializers = QuestionSerializer(quiz.questions.all(), many=True)
-    return render(request, 'quiz_start.html', {'questions': json.dumps(questions_serializers.data), 'quiz': quiz})
+    return render(request, 'quiz_start.html', {'questions': json.dumps(questions_serializers.data), 'quiz': quiz, 'quiz_pk': quiz_pk, 'group_pk': group_pk})
 
 def quiz_display(request, group_pk, quiz_pk):
     try:
@@ -59,6 +59,7 @@ def quiz_menu_display(request, group_pk, quiz_pk):
     except Quiz.DoesNotExist:
         return Response({'error': 'Unauthorized access'}, status=404)
     data = {
+        'group': group_pk,
         "quiz": quiz,
         'start_url': reverse('quiz_start', args=[group_pk, quiz_pk]),
         'manage_url': reverse('quiz_display', args=[group_pk, quiz_pk])}
@@ -117,7 +118,7 @@ class QuestionDetails(APIView):
             return Http404('Quiz does not exist')
         quiz_serializer = QuizSerializerREST(quiz)
         form = QuestionDetailsForm(initial={'quiz_pk': quiz_pk, 'question_pk': question_pk, 'group_pk': group_pk})
-        return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data})
+        return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data, 'quiz_pk': quiz_pk, 'group_pk': group_pk})
 
     def post(self, request,  *args, **kwargs):
         data = request.data.dict()
@@ -129,7 +130,7 @@ class QuestionDetails(APIView):
         quiz = Group.objects.get(id=kwargs['group_pk']).quiz_set.get(id=data['quiz_pk'])
         quiz_serializer = QuizSerializerREST(quiz)
         form = QuestionDetailsForm(initial={'quiz_pk': data['quiz_pk'], 'question_pk': data['question_pk'], 'group_pk': kwargs['group_pk']})
-        return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data})
+        return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data, 'quiz_pk': data['quiz_pk'], 'group_pk': kwargs['group_pk']})
 
 
 class GroupsList(APIView):

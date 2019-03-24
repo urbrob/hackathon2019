@@ -20,6 +20,10 @@
   </style>
 {% endblock %}
 
+{% block return %}
+ {% url 'quiz_menu_display' group_pk=group_pk quiz_pk=quiz_pk %}
+{% endblock %}
+
 {% block body %}
 <div class="container">
   <div class="modal" id="exampleModalLong" tabindex="-1" aria-labelledby="#exampleModalLong" aria-hidden="true">

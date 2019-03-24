@@ -2,6 +2,9 @@
 
 {% block head %}
 	<title>{{ group.name }}</title>
+	<style>
+	.glyphicon { margin-left: 20px; float: right;};
+	</style>
 {% endblock %}
 {% block return %}{% url 'groups' %}{% endblock %}
 {% block body %}

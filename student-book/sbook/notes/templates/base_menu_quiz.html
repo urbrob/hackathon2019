@@ -2,7 +2,7 @@
 {% block head %}
 	<title>Studentbook</title>
 {% endblock %}
-{% block return %}{% url 'group_display', 'group_pk' %}{% endblock %}
+{% block return %}{% url 'group_display' group_pk=group %}{% endblock %}
 {% block body %}
 <br><br>
 <div class="container">
