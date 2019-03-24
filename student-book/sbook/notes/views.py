@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from notes.models import Quiz, Group
+from notes.models import Quiz, Group, Question
 from django.db.models import Count
 from rest_framework.renderers import JSONRenderer
 from accounts.serializers import GroupSerializerREST
@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from django.template.loader import get_template
 from notes.forms import QuestionDetailsForm, GroupDetailsForm, QuizDetailsForm
 from django.http import Http404
+from accounts.models import Membership
 from rest_framework import permissions
 from django.urls import reverse
 from django.db.models import Q
@@ -37,6 +38,9 @@ def quiz_display(request, group_pk, quiz_pk):
     except Quiz.DoesNotExist:
         return Http404('Quiz does not exist')
     quiz_serializer = QuizSerializerREST(quiz)
+    quiz_data = quiz_serializer.data
+    import pdb; pdb.set_trace()
+    quiz_data
     return render(request, 'quiz_display.html', {'quiz': quiz_serializer.data})
 
 def quizes_add_reverse_url(quizes, group_pk):
@@ -112,19 +116,19 @@ class QuestionDetails(APIView):
         except Quiz.DoesNotExist:
             return Http404('Quiz does not exist')
         quiz_serializer = QuizSerializerREST(quiz)
-        form = QuestionDetailsForm(initial={'quiz_pk': quiz_pk, 'question_pk': question_pk})
+        form = QuestionDetailsForm(initial={'quiz_pk': quiz_pk, 'question_pk': question_pk, 'group_pk': group_pk})
         return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data})
 
-    def post(self, request):
+    def post(self, request,  *args, **kwargs):
         data = request.data.dict()
         answer_list = [data['answer_1'], data['answer_2'], data['answer_3'], data['answer_4']]
         if data.get('question_pk'):
             question = Question.objects.get(id='question_pk').update_answers(answer_list, data['description'])
         else:
-            Question.create_with_answers(data['description'], answer_list)
-        quiz = group.quiz_set.get(id=quiz_pk)
+            Question.create_with_answers(data['description'], request.user, answer_list, data['quiz_pk'])
+        quiz = Group.objects.get(id=kwargs['group_pk']).quiz_set.get(id=data['quiz_pk'])
         quiz_serializer = QuizSerializerREST(quiz)
-        form = QuestionDetailsForm()
+        form = QuestionDetailsForm(initial={'quiz_pk': data['quiz_pk'], 'question_pk': data['question_pk'], 'group_pk': kwargs['group_pk']})
         return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data})
 
 
@@ -137,8 +141,8 @@ class GroupsList(APIView):
         form = GroupDetailsForm()
         return render(request, 'accounts/groups.html', {'my_groups': my_groups, 'all_groups': all_groups, 'form': form})
 
-    def post(self, request):
-        data = request.data.dict()
+    def post(self, request, *args, **kwargs):
+        data = request.data
         group = Group.objects.create(created_by=request.user, name=data['name'])
         Membership.objects.create(user=request.user, group=group)
         my_groups = Group.objects.filter(users=request.user).distinct()
@@ -164,13 +168,13 @@ class QuizList(APIView):
         }
         return render(request, 'base_group.html', data)
 
-    def post(self, request):
-        data = request.data.dict()
+    def post(self, request, *args, **kwargs):
+        data = request.data
         group = Group.objects.get(id=data['group_pk'])
         quiz = Quiz.objects.create(created_by=request.user, name=data['name'])
         quiz.groups.add(group)
         try:
-            group = Group.objects.get(id=group_pk)
+            group = Group.objects.get(id=data['group_pk'])
         except Group.DoesNotExist:
             return Response({'error': 'Brak grupy'}, status=404)
         form = QuizDetailsForm()

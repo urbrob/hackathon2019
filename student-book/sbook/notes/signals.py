@@ -8,7 +8,7 @@ def add_answers(sender, instance, created, **kwargs):
         for index, answer in enumerate(['', '', '', '']):
             Answer.objects.create(
                 description=answer,
-                is_valid=index is 0,
+                is_valid=index is 3,
                 question=instance,
                 created_by=instance.created_by
             )

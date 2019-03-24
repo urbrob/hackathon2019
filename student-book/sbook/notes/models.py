@@ -21,24 +21,19 @@ class Question(StringIdModel):
 
 
     @classmethod
-    def create_with_answers(cls, description, user, answer_list):
-        question = Question.objects.create(description=description, created_by=user)
-        Answer = apps.get_model(app_label='notes', model_name='Answer')
-        for index, answer in enumerate(answer_list):
-            Answer.objects.create(
-                description=answer,
-                is_valid=index is 0,
-                question=question,
-                created_by=user
-            )
+    def create_with_answers(cls, description, user, answer_list, quiz_id):
+        quiz = Quiz.objects.get(id=quiz_id)
+        question = cls.objects.create(description=description, created_by=user, quiz=quiz)
+        question = question.update_answers(answer_list, description)
         return question
 
     def update_answers(self, answer_list, description):
         for index, answer in enumerate(self.answers.all().order_by('-created_at')):
             answer.description = answer_list[index]
             answer.save()
-        question.description = description
-        question.save()
+        self.description = description
+        self.save()
+        return self
 
 
 
