@@ -18,7 +18,7 @@ public class Studentbook extends AppCompatActivity
     public void openGroupList(View view)
     {
         Intent intent = new Intent(this, GroupDisplayActivity.class);
-        String userId = "XOLPGno";
+        String userId = "ojo6mOB";
         intent.putExtra("USER_ID", userId);
         startActivity(intent);
     }

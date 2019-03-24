@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -64,8 +63,6 @@ public class QuizListActivity extends ListActivity
     protected void onListItemClick(ListView l, View v, int pos, long id)
     {
         super.onListItemClick(l, v, pos, id);
-
-        Toast.makeText(getBaseContext(),id + " fUCKS gIVEN",Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, QuizActivity.class);
         String quizId = quizIdToViewId.get(id);
