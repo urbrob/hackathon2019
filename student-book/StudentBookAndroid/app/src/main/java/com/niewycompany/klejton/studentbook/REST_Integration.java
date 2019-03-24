@@ -18,10 +18,20 @@ public class REST_Integration extends AsyncTask<String, Void, String>
     {
         String recordId = params[0];
         String objectType = params[1];
+        String helperRecordId = "";
+        if(params.length==3)
+        {
+            helperRecordId = params[2];
+        }
         String result = null;
         try
         {
-            URL endpoint = new URL(this.endpoint + objectType + "/" + recordId);
+            String urlString = this.endpoint + objectType + "/" + recordId;
+            if(!helperRecordId.isEmpty())
+            {
+                urlString += '/' + helperRecordId;
+            }
+            URL endpoint = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection)endpoint.openConnection();
             connection.setRequestMethod("GET");
 
