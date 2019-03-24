@@ -114,7 +114,7 @@ class QuestionDetails(APIView):
         form = QuestionDetailsForm()
         return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data})
 
-    def post(self, request):
+    def post(self, request,  *args, **kwargs):
         data = request.data.dict()
         answer_list = [data['answer_1'], data['answer_2'], data['answer_3'], data['answer_4']]
         if data.get('question_pk'):
@@ -136,7 +136,7 @@ class GroupsList(APIView):
         form = GroupDetailsForm()
         return render(request, 'accounts/groups.html', {'my_groups': my_groups, 'all_groups': all_groups, 'form': form})
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         data = request.data.dict()
         group = Group.objects.create(created_by=request.user, name=data['name'])
         Membership.objects.create(user=request.user, group=group)
@@ -163,7 +163,7 @@ class QuizList(APIView):
         }
         return render(request, 'base_group.html', data)
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         data = request.data.dict()
         group = Group.objects.get(id=data['group_pk'])
         quiz = Quiz.objects.create(created_by=request.user, name=data['name'])
