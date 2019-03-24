@@ -25,7 +25,7 @@ from django.contrib.auth import logout as logout_django
 
 def logout(request):
     logout_django(request)
-    return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse("home"))
 
 
 class UserRegister(CsrfExemptMixin, OAuthLibMixin, APIView):
@@ -35,18 +35,17 @@ class UserRegister(CsrfExemptMixin, OAuthLibMixin, APIView):
     validator_class = oauth2_settings.OAUTH2_VALIDATOR_CLASS
     oauthlib_backend_class = oauth2_settings.OAUTH2_BACKEND_CLASS
 
-    def get(self,request):
+    def get(self, request):
         form = RegistrationForm()
-        return render(request, 'registration/registration.html', {'form': form})
-
+        return render(request, "registration/registration.html", {"form": form})
 
     def post(self, request):
         if request.auth is None:
 
             data = request.data
             data = data.dict()
-            data['is_active'] = True
-            data['username'] = data['email']
+            data["is_active"] = True
+            data["username"] = data["email"]
             serializer = serializers.RegisterSerializer(data=data)
             if serializer.is_valid():
                 try:
@@ -58,13 +57,17 @@ class UserRegister(CsrfExemptMixin, OAuthLibMixin, APIView):
                     if token_status != 200:
                         raise Exception(json.loads(body).get("error_description", ""))
                     """
-                    if data.get('web-api'):
+                    if data.get("web-api"):
                         login(request, user)
-                        return HttpResponseRedirect(reverse('home'))
+                        return HttpResponseRedirect(reverse("home"))
                     else:
-                        return Response({'message': serializer.validated_data}, status=200)
+                        return Response(
+                            {"message": serializer.validated_data}, status=200
+                        )
                 except Exception as e:
                     # ADD LOGIN TOKEN auth
-                    return Response(data={serializer.data()}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        data={serializer.data()}, status=status.HTTP_400_BAD_REQUEST
+                    )
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_403_FORBIDDEN)

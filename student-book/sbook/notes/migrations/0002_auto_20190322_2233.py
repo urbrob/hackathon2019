@@ -8,29 +8,46 @@ import sbook.utils
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('notes', '0001_initial'),
-    ]
+    dependencies = [("notes", "0001_initial")]
 
     operations = [
         migrations.AlterField(
-            model_name='answer',
-            name='created_by',
-            field=models.ForeignKey(default=sbook.utils.current_user, on_delete=django.db.models.deletion.CASCADE, related_name='answers', to=settings.AUTH_USER_MODEL),
+            model_name="answer",
+            name="created_by",
+            field=models.ForeignKey(
+                default=sbook.utils.current_user,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="answers",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='answer',
-            name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answers', to='notes.Question'),
+            model_name="answer",
+            name="question",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="answers",
+                to="notes.Question",
+            ),
         ),
         migrations.AlterField(
-            model_name='question',
-            name='created_by',
-            field=models.ForeignKey(default=sbook.utils.current_user, on_delete=django.db.models.deletion.CASCADE, related_name='questions', to=settings.AUTH_USER_MODEL),
+            model_name="question",
+            name="created_by",
+            field=models.ForeignKey(
+                default=sbook.utils.current_user,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="questions",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='quiz',
-            name='created_by',
-            field=models.ForeignKey(default=sbook.utils.current_user, on_delete=django.db.models.deletion.CASCADE, related_name='quizes', to=settings.AUTH_USER_MODEL),
+            model_name="quiz",
+            name="created_by",
+            field=models.ForeignKey(
+                default=sbook.utils.current_user,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="quizes",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

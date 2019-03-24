@@ -10,56 +10,95 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-    ]
+    dependencies = [migrations.swappable_dependency(settings.AUTH_USER_MODEL)]
 
     operations = [
         migrations.CreateModel(
-            name='Answer',
+            name="Answer",
             fields=[
-                ('id', models.CharField(editable=False, max_length=32, primary_key=True, serialize=False)),
-                ('description', models.CharField(max_length=250)),
-                ('is_valid', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('created_by', models.ForeignKey(default=sbook.utils.current_user, on_delete=django.db.models.deletion.PROTECT, related_name='answers', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.CharField(
+                        editable=False, max_length=32, primary_key=True, serialize=False
+                    ),
+                ),
+                ("description", models.CharField(max_length=250)),
+                ("is_valid", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        default=sbook.utils.current_user,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="answers",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='Question',
+            name="Question",
             fields=[
-                ('id', models.CharField(editable=False, max_length=32, primary_key=True, serialize=False)),
-                ('description', models.CharField(max_length=250)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('created_by', models.ForeignKey(default=sbook.utils.current_user, on_delete=django.db.models.deletion.PROTECT, related_name='questions', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.CharField(
+                        editable=False, max_length=32, primary_key=True, serialize=False
+                    ),
+                ),
+                ("description", models.CharField(max_length=250)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        default=sbook.utils.current_user,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="questions",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='Quiz',
+            name="Quiz",
             fields=[
-                ('id', models.CharField(editable=False, max_length=32, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=250)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('created_by', models.ForeignKey(default=sbook.utils.current_user, on_delete=django.db.models.deletion.PROTECT, related_name='quizes', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.CharField(
+                        editable=False, max_length=32, primary_key=True, serialize=False
+                    ),
+                ),
+                ("name", models.CharField(max_length=250)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        default=sbook.utils.current_user,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="quizes",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.AddField(
-            model_name='question',
-            name='quiz',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='notes.Quiz'),
+            model_name="question",
+            name="quiz",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="questions",
+                to="notes.Quiz",
+            ),
         ),
         migrations.AddField(
-            model_name='answer',
-            name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='answers', to='notes.Quiz'),
+            model_name="answer",
+            name="question",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="answers",
+                to="notes.Quiz",
+            ),
         ),
     ]

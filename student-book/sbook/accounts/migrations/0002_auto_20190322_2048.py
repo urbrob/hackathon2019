@@ -8,39 +8,77 @@ import sbook.utils
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('accounts', '0001_initial'),
-    ]
+    dependencies = [("accounts", "0001_initial")]
 
     operations = [
         migrations.CreateModel(
-            name='Group',
+            name="Group",
             fields=[
-                ('id', models.CharField(editable=False, max_length=32, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=250)),
-                ('status', models.CharField(choices=[('owner', 'Owner'), ('moderator', 'Moderator'), ('user', 'User')], max_length=50)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('created_by', models.ForeignKey(default=sbook.utils.current_user, on_delete=django.db.models.deletion.PROTECT, related_name='created_groups', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.CharField(
+                        editable=False, max_length=32, primary_key=True, serialize=False
+                    ),
+                ),
+                ("name", models.CharField(max_length=250)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("owner", "Owner"),
+                            ("moderator", "Moderator"),
+                            ("user", "User"),
+                        ],
+                        max_length=50,
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        default=sbook.utils.current_user,
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="created_groups",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.CreateModel(
-            name='Membership',
+            name="Membership",
             fields=[
-                ('id', models.CharField(editable=False, max_length=32, primary_key=True, serialize=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='memberships', to='accounts.Group')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='group_memberships', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.CharField(
+                        editable=False, max_length=32, primary_key=True, serialize=False
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "group",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="memberships",
+                        to="accounts.Group",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="group_memberships",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
         migrations.AddField(
-            model_name='group',
-            name='users',
-            field=models.ManyToManyField(through='accounts.Membership', to=settings.AUTH_USER_MODEL),
+            model_name="group",
+            name="users",
+            field=models.ManyToManyField(
+                through="accounts.Membership", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

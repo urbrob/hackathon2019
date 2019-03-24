@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accounts', '0003_auto_20190322_2227'),
-        ('notes', '0002_auto_20190322_2233'),
+        ("accounts", "0003_auto_20190322_2227"),
+        ("notes", "0002_auto_20190322_2233"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='quiz',
-            name='groups',
-            field=models.ManyToManyField(to='accounts.Group'),
-        ),
+            model_name="quiz",
+            name="groups",
+            field=models.ManyToManyField(to="accounts.Group"),
+        )
     ]

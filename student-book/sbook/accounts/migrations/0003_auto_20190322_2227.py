@@ -8,24 +8,32 @@ import sbook.utils
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('accounts', '0002_auto_20190322_2048'),
-    ]
+    dependencies = [("accounts", "0002_auto_20190322_2048")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='group',
-            name='status',
-        ),
+        migrations.RemoveField(model_name="group", name="status"),
         migrations.AddField(
-            model_name='membership',
-            name='status',
-            field=models.CharField(choices=[('owner', 'Owner'), ('moderator', 'Moderator'), ('user', 'User')], default=1, max_length=50),
+            model_name="membership",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("owner", "Owner"),
+                    ("moderator", "Moderator"),
+                    ("user", "User"),
+                ],
+                default=1,
+                max_length=50,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='group',
-            name='created_by',
-            field=models.ForeignKey(default=sbook.utils.current_user, on_delete=django.db.models.deletion.CASCADE, related_name='created_groups', to=settings.AUTH_USER_MODEL),
+            model_name="group",
+            name="created_by",
+            field=models.ForeignKey(
+                default=sbook.utils.current_user,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="created_groups",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

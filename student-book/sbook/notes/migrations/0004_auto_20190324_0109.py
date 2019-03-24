@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('notes', '0003_quiz_groups'),
-    ]
+    dependencies = [("notes", "0003_quiz_groups")]
 
     operations = [
         migrations.AlterField(
-            model_name='answer',
-            name='description',
+            model_name="answer",
+            name="description",
             field=models.CharField(blank=True, max_length=250, null=True),
-        ),
+        )
     ]

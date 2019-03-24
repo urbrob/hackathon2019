@@ -4,7 +4,11 @@ from notes.models import Quiz, Group, Question
 from django.db.models import Count
 from rest_framework.renderers import JSONRenderer
 from accounts.serializers import GroupSerializerREST
-from notes.serializers import QuizSerializerREST, QuizSerializerListREST,  QuestionSerializer
+from notes.serializers import (
+    QuizSerializerREST,
+    QuizSerializerListREST,
+    QuestionSerializer,
+)
 from rest_framework.response import Response
 from django.template.loader import get_template
 from notes.forms import QuestionDetailsForm, GroupDetailsForm, QuizDetailsForm
@@ -16,36 +20,50 @@ from django.db.models import Q
 import json
 import datetime
 
+
 def quiz_start(request, group_pk, quiz_pk):
     try:
         group = Group.objects.get(id=group_pk)
     except Group.DoesNotExist:
-        return Response({'error': 'Brak grupy'}, status=404)
+        return Response({"error": "Brak grupy"}, status=404)
     try:
         quiz = group.quiz_set.get(id=quiz_pk)
     except Quiz.DoesNotExist:
-        return Http404('Quiz does not exist')
+        return Http404("Quiz does not exist")
     questions_serializers = QuestionSerializer(quiz.questions.all(), many=True)
-    return render(request, 'quiz_start.html', {'questions': json.dumps(questions_serializers.data), 'quiz': quiz, 'quiz_pk': quiz_pk, 'group_pk': group_pk})
+    return render(
+        request,
+        "quiz_start.html",
+        {
+            "questions": json.dumps(questions_serializers.data),
+            "quiz": quiz,
+            "quiz_pk": quiz_pk,
+            "group_pk": group_pk,
+        },
+    )
+
 
 def quiz_display(request, group_pk, quiz_pk):
     try:
         group = Group.objects.get(id=group_pk)
     except Group.DoesNotExist:
-        return Response({'error': 'Brak grupy'}, status=404)
+        return Response({"error": "Brak grupy"}, status=404)
     try:
         quiz = group.quiz_set.get(id=quiz_pk)
     except Quiz.DoesNotExist:
-        return Http404('Quiz does not exist')
+        return Http404("Quiz does not exist")
     quiz_serializer = QuizSerializerREST(quiz)
     quiz_data = quiz_serializer.data
-    import pdb; pdb.set_trace()
+    import pdb
+
+    pdb.set_trace()
     quiz_data
-    return render(request, 'quiz_display.html', {'quiz': quiz_serializer.data})
+    return render(request, "quiz_display.html", {"quiz": quiz_serializer.data})
+
 
 def quizes_add_reverse_url(quizes, group_pk):
     for quiz in quizes:
-        quiz.reverse_url = reverse('quiz_menu_display', args=[group_pk, quiz.pk])
+        quiz.reverse_url = reverse("quiz_menu_display", args=[group_pk, quiz.pk])
         yield quiz
 
 
@@ -53,21 +71,22 @@ def quiz_menu_display(request, group_pk, quiz_pk):
     try:
         group = Group.objects.get(id=group_pk)
     except Group.DoesNotExist:
-        return Response({'error': 'Brak grupy'}, status=404)
+        return Response({"error": "Brak grupy"}, status=404)
     try:
         quiz = group.quiz_set.get(id=quiz_pk)
     except Quiz.DoesNotExist:
-        return Response({'error': 'Unauthorized access'}, status=404)
+        return Response({"error": "Unauthorized access"}, status=404)
     data = {
-        'group': group_pk,
+        "group": group_pk,
         "quiz": quiz,
-        'start_url': reverse('quiz_start', args=[group_pk, quiz_pk]),
-        'manage_url': reverse('quiz_display', args=[group_pk, quiz_pk])}
-    return render(request, 'base_menu_quiz.html', data)
+        "start_url": reverse("quiz_start", args=[group_pk, quiz_pk]),
+        "manage_url": reverse("quiz_display", args=[group_pk, quiz_pk]),
+    }
+    return render(request, "base_menu_quiz.html", data)
 
 
 class UserGroupsListREST(APIView):
-    renderer_classes = (JSONRenderer, )
+    renderer_classes = (JSONRenderer,)
 
     def get(self, request, user_pk):
         try:
@@ -79,7 +98,7 @@ class UserGroupsListREST(APIView):
 
 
 class QuizListREST(APIView):
-    renderer_classes = (JSONRenderer, )
+    renderer_classes = (JSONRenderer,)
 
     def get(self, request, user_pk, group_pk):
         try:
@@ -92,7 +111,7 @@ class QuizListREST(APIView):
 
 
 class QuizDetails(APIView):
-    renderer_classes = (JSONRenderer, )
+    renderer_classes = (JSONRenderer,)
 
     def get(self, request, quiz_pk):
         try:
@@ -111,26 +130,65 @@ class QuestionDetails(APIView):
             question_pk = ""
             group = Group.objects.get(id=group_pk)
         except Group.DoesNotExist:
-            return Response({'error': 'Brak grupy'}, status=404)
+            return Response({"error": "Brak grupy"}, status=404)
         try:
             quiz = group.quiz_set.get(id=quiz_pk)
         except Quiz.DoesNotExist:
-            return Http404('Quiz does not exist')
+            return Http404("Quiz does not exist")
         quiz_serializer = QuizSerializerREST(quiz)
-        form = QuestionDetailsForm(initial={'quiz_pk': quiz_pk, 'question_pk': question_pk, 'group_pk': group_pk})
-        return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data, 'quiz_pk': quiz_pk, 'group_pk': group_pk})
+        form = QuestionDetailsForm(
+            initial={
+                "quiz_pk": quiz_pk,
+                "question_pk": question_pk,
+                "group_pk": group_pk,
+            }
+        )
+        return render(
+            request,
+            "quiz_display.html",
+            {
+                "form": form,
+                "quiz": quiz_serializer.data,
+                "quiz_pk": quiz_pk,
+                "group_pk": group_pk,
+            },
+        )
 
-    def post(self, request,  *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         data = request.data.dict()
-        answer_list = [data['answer_1'], data['answer_2'], data['answer_3'], data['answer_4']]
-        if data.get('question_pk'):
-            question = Question.objects.get(id='question_pk').update_answers(answer_list, data['description'])
+        answer_list = [
+            data["answer_1"],
+            data["answer_2"],
+            data["answer_3"],
+            data["answer_4"],
+        ]
+        if data.get("question_pk"):
+            question = Question.objects.get(id="question_pk").update_answers(
+                answer_list, data["description"]
+            )
         else:
-            Question.create_with_answers(data['description'], request.user, answer_list, data['quiz_pk'])
-        quiz = Group.objects.get(id=kwargs['group_pk']).quiz_set.get(id=data['quiz_pk'])
+            Question.create_with_answers(
+                data["description"], request.user, answer_list, data["quiz_pk"]
+            )
+        quiz = Group.objects.get(id=kwargs["group_pk"]).quiz_set.get(id=data["quiz_pk"])
         quiz_serializer = QuizSerializerREST(quiz)
-        form = QuestionDetailsForm(initial={'quiz_pk': data['quiz_pk'], 'question_pk': data['question_pk'], 'group_pk': kwargs['group_pk']})
-        return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data, 'quiz_pk': data['quiz_pk'], 'group_pk': kwargs['group_pk']})
+        form = QuestionDetailsForm(
+            initial={
+                "quiz_pk": data["quiz_pk"],
+                "question_pk": data["question_pk"],
+                "group_pk": kwargs["group_pk"],
+            }
+        )
+        return render(
+            request,
+            "quiz_display.html",
+            {
+                "form": form,
+                "quiz": quiz_serializer.data,
+                "quiz_pk": data["quiz_pk"],
+                "group_pk": kwargs["group_pk"],
+            },
+        )
 
 
 class GroupsList(APIView):
@@ -138,18 +196,30 @@ class GroupsList(APIView):
 
     def get(self, request):
         my_groups = Group.objects.filter(users=request.user).distinct()
-        all_groups = Group.objects.filter(~Q(id__in=my_groups.values_list('id', flat=True)))
+        all_groups = Group.objects.filter(
+            ~Q(id__in=my_groups.values_list("id", flat=True))
+        )
         form = GroupDetailsForm()
-        return render(request, 'accounts/groups.html', {'my_groups': my_groups, 'all_groups': all_groups, 'form': form})
+        return render(
+            request,
+            "accounts/groups.html",
+            {"my_groups": my_groups, "all_groups": all_groups, "form": form},
+        )
 
     def post(self, request, *args, **kwargs):
         data = request.data
-        group = Group.objects.create(created_by=request.user, name=data['name'])
+        group = Group.objects.create(created_by=request.user, name=data["name"])
         Membership.objects.create(user=request.user, group=group)
         my_groups = Group.objects.filter(users=request.user).distinct()
-        all_groups = Group.objects.filter(~Q(id__in=my_groups.values_list('id', flat=True)))
+        all_groups = Group.objects.filter(
+            ~Q(id__in=my_groups.values_list("id", flat=True))
+        )
         form = GroupDetailsForm()
-        return render(request, 'accounts/groups.html', {'my_groups': my_groups, 'all_groups': all_groups, 'form': form})
+        return render(
+            request,
+            "accounts/groups.html",
+            {"my_groups": my_groups, "all_groups": all_groups, "form": form},
+        )
 
 
 class QuizList(APIView):
@@ -159,30 +229,30 @@ class QuizList(APIView):
         try:
             group = Group.objects.get(id=group_pk)
         except Group.DoesNotExist:
-            return Response({'error': 'Brak grupy'}, status=404)
-        form = QuizDetailsForm(initial={'group_pk': group_pk})
+            return Response({"error": "Brak grupy"}, status=404)
+        form = QuizDetailsForm(initial={"group_pk": group_pk})
         data = {
-            'quizes': quizes_add_reverse_url(group.quiz_set.all(), group.pk),
-            'events': [],
-            'notes': [],
-            'form': form,
+            "quizes": quizes_add_reverse_url(group.quiz_set.all(), group.pk),
+            "events": [],
+            "notes": [],
+            "form": form,
         }
-        return render(request, 'base_group.html', data)
+        return render(request, "base_group.html", data)
 
     def post(self, request, *args, **kwargs):
         data = request.data
-        group = Group.objects.get(id=data['group_pk'])
-        quiz = Quiz.objects.create(created_by=request.user, name=data['name'])
+        group = Group.objects.get(id=data["group_pk"])
+        quiz = Quiz.objects.create(created_by=request.user, name=data["name"])
         quiz.groups.add(group)
         try:
-            group = Group.objects.get(id=data['group_pk'])
+            group = Group.objects.get(id=data["group_pk"])
         except Group.DoesNotExist:
-            return Response({'error': 'Brak grupy'}, status=404)
+            return Response({"error": "Brak grupy"}, status=404)
         form = QuizDetailsForm()
         data = {
-            'quizes': quizes_add_reverse_url(group.quiz_set.all(), group.pk),
-            'events': [],
-            'notes': [],
-            'form': form,
+            "quizes": quizes_add_reverse_url(group.quiz_set.all(), group.pk),
+            "events": [],
+            "notes": [],
+            "form": form,
         }
-        return render(request, 'base_group.html', data)
+        return render(request, "base_group.html", data)
