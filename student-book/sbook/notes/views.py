@@ -12,6 +12,7 @@ from django.http import Http404
 from rest_framework import permissions
 from django.urls import reverse
 from django.db.models import Q
+import json
 import datetime
 
 def quiz_start(request, group_pk, quiz_pk):
@@ -24,8 +25,7 @@ def quiz_start(request, group_pk, quiz_pk):
     except Quiz.DoesNotExist:
         return Http404('Quiz does not exist')
     questions_serializers = QuestionSerializer(quiz.questions.all(), many=True)
-    #import pdb; pdb.set_trace()
-    return render(request, 'quiz_start.html', {'questions': questions_serializers.data, 'quiz': quiz})
+    return render(request, 'quiz_start.html', {'questions': json.dumps(questions_serializers.data), 'quiz': quiz})
 
 def quiz_display(request, group_pk, quiz_pk):
     try:

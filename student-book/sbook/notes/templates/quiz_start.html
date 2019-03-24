@@ -2,6 +2,44 @@
 
 {% block head %}
 	<title>Studentbook</title>
+	<script type="text/javascript">
+		var QUESTION_LIST = {{questions|safe}};
+		var INDEX = 0;
+		var WORK_FLAG = false;
+		function set_and_reset() {
+			document.getElementById('0').style.backgroundColor='white';
+			document.getElementById('1').style.backgroundColor='white';
+			document.getElementById('2').style.backgroundColor='white';
+			document.getElementById('3').style.backgroundColor='white';
+			let actual = QUESTION_LIST[INDEX]
+			if (typeof actual !== 'undefined'){
+				document.getElementById('question').innerHTML=actual['description']
+				document.getElementById('ans-0').innerHTML=actual['answers'][0]['description']
+				document.getElementById('ans-1').innerHTML=actual['answers'][1]['description']
+				document.getElementById('ans-2').innerHTML=actual['answers'][2]['description']
+				document.getElementById('ans-3').innerHTML=actual['answers'][3]['description']
+				WORK_FLAG = true
+			}else {
+				document.getElementById('question').innerHTML='Koniec pytań :C';
+				document.getElementById('question-container').style.display='None';
+
+			}
+		}
+
+		function answer_and_reset(answer) {
+			if (WORK_FLAG){
+				let answers = QUESTION_LIST[INDEX]['answers']
+				if (answers[answer]['is_valid'] === true){
+					document.getElementById(answer.toString()).style.backgroundColor='green'
+				}else {
+					document.getElementById(answer.toString()).style.backgroundColor='red'
+				}
+				WORK_FLAG = false
+				INDEX++
+				setTimeout(set_and_reset, 1000)
+			}
+		}
+	</script>
 {% endblock %}
 
 
@@ -16,46 +54,51 @@
       </div>
     </div>
   </div>
-  {% for question in questions %}
   <div class="container">
     <br>
     <div class="container">
       <div class="card">
         <div class="card-body bg-secondary">
-          <div id="{{ question.pk }}" class="row justify-content-md-center text-white">
-          {{ question.description }}
-          </div>
+          <div id="question" class="row justify-content-md-center text-white">Tu jest pytanie</div>
         </div>
       </div>
-      <div class="container">
-        {% for answer in question.answers %}
-        <div class="col">
-          <div id="{{ answer.pk }}" class="card">
+      <div class="container" id='question-container'>
+        <div onclick="answer_and_reset(0)" class="col">
+          <div id="0" class="card">
             <div class="card-body">
-              <div class="row justify-content-md-center">
-                {{ answer.description }}
-              </div>
+              <div id="ans-0" class="row justify-content-md-center">Tu jest zawartość pytania</div>
             </div>
           </div>
         </div>
-        <script type="text/javascript">
-          function getcube_{{ answer.pk }}(){
-            var number=document.getElementById("{{ question.pk }}").;
-            alert(number);
-          }
-        </script>
-        <input type="button" value="cube" onclick="getcube_{{ answer.pk }}()"/>
-        {% endfor %}
+				<div onclick="answer_and_reset(1)" class="col">
+          <div id="1" class="card">
+            <div class="card-body">
+              <div id="ans-1" class="row justify-content-md-center">Tu jest zawartość pytania</div>
+            </div>
+          </div>
+        </div>
+				<div onclick="answer_and_reset(2)" class="col">
+          <div id="2" class="card">
+            <div class="card-body">
+              <div id="ans-2" class="row justify-content-md-center">Tu jest zawartość pytania</div>
+            </div>
+          </div>
+        </div>
+				<div onclick="answer_and_reset(3)" class="col">
+          <div id="3" class="card">
+            <div class="card-body">
+              <div id="ans-3" class="row justify-content-md-center">Tu jest zawartość pytania</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  {% endfor %}
 </div>
 
 
-
-
-
-
+<script>
+document.onload = set_and_reset()
+</script>
 
 {% endblock %}
