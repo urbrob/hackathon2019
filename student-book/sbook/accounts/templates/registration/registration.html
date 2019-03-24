@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<style>
+.btn {
+  margin-top: 15px;
+}
+</style>
+{% endblock %}
+
 {% block body %}
 <br><br>
 <div class="container">
@@ -11,7 +19,7 @@
                 {% csrf_token %}
                 {{ form }}
                 <input type="hidden" name="web-api" value="true">
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn  btn-primary y-10">Register</button>
             </form>
 
         </div>
