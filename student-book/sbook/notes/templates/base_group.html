@@ -3,7 +3,7 @@
 {% block head %}
 	<title>{{ group.name }}</title>
 {% endblock %}
-
+{% block return %}{% url 'groups' %}{% endblock %}
 {% block body %}
 <br><br>
 
