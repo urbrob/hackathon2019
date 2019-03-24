@@ -16,6 +16,8 @@ class RegisterSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(_("Username already exists"))
         except models.User.DoesNotExist:
             pass
+        data['email'] = data['username']
+        data['username'] = data['username'].split('@')[0]
         return data
 
     def create(self, validated_data):
