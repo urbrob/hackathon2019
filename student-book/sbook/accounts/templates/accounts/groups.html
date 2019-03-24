@@ -3,6 +3,32 @@
 	<title>Studentbook</title>
 {% endblock %}
 {% block body %}
+
+<div class="container">
+  <div class="modal" id="exampleModalLong" tabindex="-1" aria-labelledby="#exampleModalLong" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Dodaj pytania!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post">
+        <div class="modal-body">
+          {% csrf_token %}
+          {{form.as_p}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">zamknij</button>
+          <input type="submit" class="btn btn-primary">
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
 	<br><br>
 		<div class="row">
@@ -13,6 +39,7 @@
 								<button type="button" onClick="location.href='{{group.reverse_url}}'" class="list-group-item list-group-item-action">{{group.name}}</button>
 							{% endfor %}
 						  </div>
+			<button type="button" data-toggle="modal" data-target="#exampleModalLong" class="list-group-item list-group-item-action btn-primary text-center"> Utwórz Nową Grupę </button>
 			</div>
 			<div class="col-6 col-md-8">
 				<div class="list-group-item text-white bg-dark">Wszystkie grupy </div>

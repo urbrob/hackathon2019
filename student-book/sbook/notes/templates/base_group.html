@@ -8,6 +8,31 @@
 <br><br>
 
 <div class="container">
+  <div class="modal" id="exampleModalLong" tabindex="-1" aria-labelledby="#exampleModalLong" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Dodaj pytania!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post">
+        <div class="modal-body">
+          {% csrf_token %}
+          {{form.as_p}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">zamknij</button>
+          <input type="submit" class="btn btn-primary">
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
     <div class="row justify-content-md-center">
           <h2>
             {{ group.name }}
@@ -30,7 +55,7 @@
 
 <div class="container">
   <br>
-  <div id="id1"  style="display:block">
+  <div id="id1"  style="display:none">
     <div class="col-12">
       <div class="list-group-item text-white bg-dark">
         <div class="row justify-content-md-center">
@@ -40,6 +65,7 @@
       {% for quize in quizes %}
         <button type="button" onClick="location.href='{{quize.reverse_url}}'" class="list-group-item list-group-item-action">{{quize.name}}</button>
       {% endfor %}
+      <button type="button" data-toggle="modal" data-target="#exampleModalLong" class="list-group-item list-group-item-action btn-primary">---------------------------------------------<span class="glyphicon glyphicon-plus"></span> </button>
     </div>
   </div>
 
