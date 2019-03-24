@@ -16,27 +16,50 @@
       margin-top: 45px;
       margin-bottom: 20px;
     }
-    .modal-dialog {
 
-    }
   </style>
 {% endblock %}
 
 {% block body %}
-  <h1 class='text-center'>{{quiz.name}}</h1>
-  <div class="container background-white">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        Lista pytań
-      </div>
-      <div class="panel-body">
-        {% for question in quiz.questions %}
-				<button type="button" data-toggle="modal" data-target="#exampleModal" class="list-group-item list-group-item-action"></button>
-          {{question.description}} <a href="#myModal"><span class="glyphicon glyphicon-pencil"></span></a> <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
-				{% endfor %}
-        <button type="button" data-toggle="modal" data-target="#exampleModal" class="list-group-item list-group-item-action btn-primary">---------------------------------------------<span class="glyphicon glyphicon-plus"></span> </button>
+<div class="container">
+  <div class="modal" id="exampleModalLong" tabindex="-1" aria-labelledby="#exampleModalLong" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Dodaj pytania!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post">
+        <div class="modal-body">
+          {% csrf_token %}
+          {{form.as_p}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">zamknij</button>
+          <input type="submit" class="btn btn-primary">
+        </div>
+        </form>
       </div>
     </div>
   </div>
+
+    <h1 class='text-center'>{{quiz.name}}</h1>
+    <div class="container background-white">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          Lista pytań
+        </div>
+        <div class="panel-body">
+          {% for question in quiz.questions %}
+  				<button type="button" data-toggle="modal" data-target="#exampleModalLong" class="list-group-item list-group-item-action">
+            {{question.description}} <a href="#myModal"><span class="glyphicon glyphicon-pencil"></span></a> <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a></button>
+  				{% endfor %}
+          <button type="button" data-toggle="modal" data-target="#exampleModalLong" class="list-group-item list-group-item-action btn-primary">---------------------------------------------<span class="glyphicon glyphicon-plus"></span> </button>
+        </div>
+      </div>
+    </div>
+</div>
 
 {% endblock %}

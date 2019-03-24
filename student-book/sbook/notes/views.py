@@ -103,6 +103,7 @@ class QuestionDetails(APIView):
 
     def get(self, request, group_pk, quiz_pk):
         try:
+            question_pk = ""
             group = Group.objects.get(id=group_pk)
         except Group.DoesNotExist:
             return Response({'error': 'Brak grupy'}, status=404)
@@ -111,7 +112,7 @@ class QuestionDetails(APIView):
         except Quiz.DoesNotExist:
             return Http404('Quiz does not exist')
         quiz_serializer = QuizSerializerREST(quiz)
-        form = QuestionDetailsForm()
+        form = QuestionDetailsForm(initial={'quiz_pk': quiz_pk, 'question_pk': question_pk})
         return render(request, 'quiz_display.html', {'form': form, 'quiz': quiz_serializer.data})
 
     def post(self, request):
@@ -154,7 +155,7 @@ class QuizList(APIView):
             group = Group.objects.get(id=group_pk)
         except Group.DoesNotExist:
             return Response({'error': 'Brak grupy'}, status=404)
-        form = QuizDetailsForm()
+        form = QuizDetailsForm(initial={'group_pk': group_pk})
         data = {
             'quizes': quizes_add_reverse_url(group.quiz_set.all(), group.pk),
             'events': [],
