@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GroupDisplayActivity extends ListActivity
+public class QuizListActivity extends ListActivity
 {
-    String groupsJSON;
+    String quizzesJSON;
+    String groupId;
     String userId;
     Boolean requestDone = false;
-    Map<Long,String> groupIdToViewId = new HashMap<Long,String>();
+    Map<Long,String> quizIdToViewId = new HashMap<Long,String>();
     ArrayList<String> listItems = new ArrayList<String>();
     ArrayAdapter<String> adapter;
     @Override
@@ -26,11 +27,12 @@ public class GroupDisplayActivity extends ListActivity
     {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        this.groupId = intent.getStringExtra("GROUP_ID");
         this.userId = intent.getStringExtra("USER_ID");
 
         try
         {
-            groupsJSON = new REST_Integration().execute(userId, "groups").get();
+            quizzesJSON = new REST_Integration().execute(userId, "quizes", groupId).get();
             requestDone=true;
         }
         catch(Exception e)
@@ -43,12 +45,12 @@ public class GroupDisplayActivity extends ListActivity
         }
 
         Gson gson = new Gson();
-        Group[] groups = gson.fromJson(groupsJSON,Group[].class);
+        Quiz[] quizes = gson.fromJson(quizzesJSON,Quiz[].class);
         Long i=0L;
-        for(Group g : groups)
+        for(Quiz q : quizes)
         {
-            groupIdToViewId.put(i,g.pk);
-            listItems.add(g.name);
+            quizIdToViewId.put(i,q.pk);
+            listItems.add(q.name);
             i++;
         }
         setContentView(R.layout.activity_group_display);
@@ -65,10 +67,9 @@ public class GroupDisplayActivity extends ListActivity
 
         Toast.makeText(getBaseContext(),String.valueOf(id) + " fUCKS gIVEN",Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this, QuizListActivity.class);
-        String groupId = groupIdToViewId.get(id);
-        intent.putExtra("GROUP_ID", groupId);
-        intent.putExtra("USER_ID", this.userId);
+        Intent intent = new Intent(this, QuizActivity.class);
+        String quizId = quizIdToViewId.get(id);
+        intent.putExtra("QUIZ_ID", quizId);
         startActivity(intent);
     }
 }
