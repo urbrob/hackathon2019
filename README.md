@@ -1,6 +1,6 @@
 # Application for students
 ## Description
-It's an app for students. You can create your own group and share your quizes.
+It's an app for students. You can create your own group and share your quizes.(As MVP :D)
 
 ## Technology
 - Backend: Django
